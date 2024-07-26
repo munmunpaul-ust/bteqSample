@@ -1,0 +1,61 @@
+.logon <your_teradata_server>/<your_username>,<your_password>;
+
+.SET TITLEDASHES OFF;
+.SET WIDTH 150;
+.SET ERROROUT STDOUT;
+
+/************* Query 1: Selecting Data *******************/
+
+SELECT 
+  Column1,
+  Column2,
+  Column3
+FROM 
+  Your_Table
+WHERE 
+  Condition;
+
+/**********************************************************/
+
+
+/************* Query 2: Inserting Data *******************/
+
+INSERT INTO 
+  Target_Table (
+    Column1,
+    Column2,
+    Column3
+  )
+VALUES 
+  (
+    Value1,
+    Value2,
+    Value3
+  );
+
+/**********************************************************/
+
+
+/************* Query 3: Updating Data *******************/
+
+UPDATE 
+  Your_Table
+SET 
+  Column1 = New_Value
+WHERE 
+  Condition;
+
+/**********************************************************/
+
+
+/************* Query 4: Deleting Data *******************/
+
+DELETE FROM 
+  Your_Table
+WHERE 
+  Condition;
+
+/**********************************************************/
+
+
+.logoff;
