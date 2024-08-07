@@ -1,0 +1,47 @@
+/* This script creates a new table, loads data from an external file, and performs some queries */
+
+/* Create a new database and table */
+CREATE DATABASE sales_db;
+CREATE TABLE sales_db.orders (
+  order_id INTEGER,
+  customer_id INTEGER,
+  order_date DATE,
+  product VARCHAR(50),
+  quantity INTEGER,
+  price DECIMAL(10,2)
+);
+
+/* Load data from an external file */
+USING (FILE = '/path/to/orders.dat')
+IMPORT
+  BULK
+  METHOD = MANUAL
+  EXCEPTIONS FILE = '/path/to/exceptions.log'
+  SHOW
+  TRAILER
+INTO sales_db.orders
+WITH
+  ERRORFILES = '/path/to/errors.log'
+;
+
+/* Query the data */
+SELECT * FROM sales_db.orders;
+
+/* Aggregate data */
+SELECT product, SUM(quantity) AS total_quantity, SUM(quantity * price) AS total_revenue
+FROM sales_db.orders
+GROUP BY product;
+
+/* Join with another table */
+SELECT o.order_id, o.product, o.quantity, c.name, c.city
+FROM sales_db.orders o
+JOIN sales_db.customers c ON o.customer_id = c.customer_id;
+
+/* Update data */
+UPDATE sales_db.orders
+SET price = price * 1.1
+WHERE order_date >= DATE '2023-01-01';
+
+/* Drop the table and database */
+DROP TABLE sales_db.orders;
+DROP DATABASE sales_db;
